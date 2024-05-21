@@ -12,30 +12,36 @@ const userNameSchema = new Schema<UserName>({
     type: String,
     required: [true, 'First name is required'],
     trim: true,
-    maxlength: [25, 'First name Max allowed length is 25 characters'],
-    // validate: {
-    //   validator: function (value: string) {
-    //     const firstNameV =
-    //       value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-    //     return firstNameV === value;
-    //   },
-    //   message: '{VALUE} is not in capitalize format',
-    // },
+    maxlength: [20, 'First name Max allowed length is 20 characters'],
+    validate: {
+      validator: function (value: string) {
+        const firstNameV =
+          value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+        return firstNameV === value;
+      },
+      message: '{VALUE} is not in capitalize format',
+    },
   },
   middleName: {
     type: String,
     trim: true,
+    validate: {
+      validator: function (value: string) {
+        return validator.isAlpha(value, 'en-US', { ignore: ' -' });
+      },
+      message: '{VALUE} is not valid',
+    },
   },
   lastName: {
     type: String,
     trim: true,
     required: [true, 'Last name is required'],
-    // validate: {
-    //   validator: function (value: string) {
-    //     return validator.isAlpha(value);
-    //   },
-    //   message: '{VALUE} is not valid',
-    // },
+    validate: {
+      validator: function (value: string) {
+        return validator.isAlpha(value);
+      },
+      message: '{VALUE} is not valid',
+    },
   },
 });
 
@@ -44,6 +50,12 @@ const guardianSchema = new Schema<Guardian>({
     type: String,
     trim: true,
     required: true,
+    validate: {
+      validator: function (value: string) {
+        return validator.isAlpha(value, 'en-US', { ignore: ' -' });
+      },
+      message: '{VALUE} is not valid',
+    },
   },
   fatherOccupation: {
     type: String,

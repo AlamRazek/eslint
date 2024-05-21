@@ -9,4 +9,6 @@ router.get('/', StudentControllers.getAllStudents);
 
 router.get('/:studentId', StudentControllers.getOneStudent);
 
+router.delete('/:studentId', StudentControllers.deleteSingleStudent);
+
 export const StudentRoutes = router;
