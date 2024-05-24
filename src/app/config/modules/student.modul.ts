@@ -109,7 +109,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   password: {
     type: String,
     required: [true, 'password is required'],
-    unique: true,
     maxlength: [20, 'password cannot be more than 20'],
   },
   name: {
@@ -163,15 +162,23 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
   isActive: {
     type: String,
-    enum: ['active', 'blocked'],
+    enum: ['active', 'inActive'],
     default: 'active',
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
   },
 });
 
-studentSchema.pre('save', async function (next) {
+studentSchema.pre<TStudent>('save', async function (next) {
   const user = this;
 
   user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
+  next();
+});
+studentSchema.post<TStudent>('save', function (doc, next) {
+  doc.password = '';
   next();
 });
 

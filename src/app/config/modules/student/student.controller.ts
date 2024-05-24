@@ -34,7 +34,7 @@ const createStudent = async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.status(500).json({
-      success: true,
+      success: false,
       message: 'Something went wrong',
       error: err,
     });
