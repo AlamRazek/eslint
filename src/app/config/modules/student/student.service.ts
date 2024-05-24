@@ -1,25 +1,28 @@
-import { StudentModel } from '../student.modul';
-import { Student } from './student.interface';
+import { Student } from '../student.modul';
+import { TStudent } from './student.interface';
 
-const createStudentIntoDB = async (student: Student) => {
-  // const result = await StudentModel.create(student); // built in static method
+const createStudentIntoDB = async (studentData: TStudent) => {
+  const result = await Student.create(studentData); // built in static method
 
-  const studentData = new StudentModel(student);
-  const result = await studentData.save(); // built in instance method
+  // const student = new Student(studentData);
+  // const result = await student.save(); // build in instance method
+
+  //  const studentData = new StudentModel(student);
+  // const result = await studentData.save(); // built in instance method
   return result;
 };
 
 const getAllStudentsFromDB = async () => {
-  const result = await StudentModel.find();
+  const result = await Student.find();
   return result;
 };
 
 const getSingleStudentFromDb = async (id: string) => {
-  const result = await StudentModel.findOne({ id });
+  const result = await Student.findOne({ id });
   return result;
 };
 const deleteSingleStudentFromDb = async (id: string) => {
-  const result = await StudentModel.deleteOne({ id });
+  const result = await Student.deleteOne({ id });
   return result;
 };
 
