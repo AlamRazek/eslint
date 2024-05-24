@@ -1,13 +1,15 @@
 import validator from 'validator';
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import {
   TGuardian,
   TLocalGuardian,
   TStudent,
-  TStudentMethod,
   StudentModel,
   TUserName,
 } from './student/student.interface';
+
+import bcrypt from 'bcrypt';
+import config from '..';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -101,8 +103,15 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
   },
 });
 
-const studentSchema = new Schema<TStudent, StudentModel, TStudentMethod>({
+const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, required: true, unique: true },
+
+  password: {
+    type: String,
+    required: [true, 'password is required'],
+    unique: true,
+    maxlength: [20, 'password cannot be more than 20'],
+  },
   name: {
     type: userNameSchema,
     required: true,
@@ -159,8 +168,39 @@ const studentSchema = new Schema<TStudent, StudentModel, TStudentMethod>({
   },
 });
 
+studentSchema.pre('save', async function (next) {
+  const user = this;
+
+  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
+  next();
+});
+
+// pre save middleware/hook
+// Query Middleware
+studentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
+
+// creating  a custom static method
+
+studentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id });
+  return existingUser;
+};
+
 /* studentSchema.methods.isUserExits = async function (id: string) {
   const existingUser = await Student.findOne({ id });
 }; */
 
-export const Student = model<TStudent>('Student', studentSchema);
+export const Student = model<TStudent, StudentModel>('Student', studentSchema);
