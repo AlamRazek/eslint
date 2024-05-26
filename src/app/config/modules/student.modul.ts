@@ -109,6 +109,8 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   user: {
     type: Schema.Types.ObjectId,
     required: true,
+    unique: true,
+    ref: 'User',
   },
 
   password: {
