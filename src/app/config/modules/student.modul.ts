@@ -167,11 +167,7 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   profileImage: {
     type: String,
   },
-  isActive: {
-    type: String,
-    enum: ['active', 'inActive'],
-    default: 'active',
-  },
+
   isDeleted: {
     type: Boolean,
     default: false,
