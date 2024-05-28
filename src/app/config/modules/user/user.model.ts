@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
-
+import bcrypt from 'bcrypt';
 import { TUser } from './user.interface';
+import config from '../..';
 
 const userSchema = new Schema<TUser>(
   {
@@ -14,7 +15,7 @@ const userSchema = new Schema<TUser>(
     },
     needsPasswordChange: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     role: {
       type: String,
@@ -34,5 +35,16 @@ const userSchema = new Schema<TUser>(
     timestamps: true,
   },
 );
+
+userSchema.pre<TUser>('save', async function (next) {
+  const user = this;
+
+  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
+  next();
+});
+userSchema.post<TUser>('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
 
 export const User = model<TUser>('User', userSchema);

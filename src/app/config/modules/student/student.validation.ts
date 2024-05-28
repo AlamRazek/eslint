@@ -11,7 +11,7 @@ const UserNameValidationSchema = z.object({
   middleName: z
     .string()
     .optional()
-    .refine((value) => /^[A-Za-z -]*$/g.test(value), {
+    .refine((value) => /^[A-Za-z]+$/g.test(value), {
       message:
         'Middle name must contain only alphabetic characters, spaces, or hyphens',
     }),

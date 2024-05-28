@@ -1,28 +1,18 @@
+import { NextFunction, Request, Response } from 'express';
 import { USerServices } from './user.service';
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    // creating a schema validation using zod
-
     const { password, student: studentData } = req.body;
 
-    // joi validation
-    // const { error } = studentValidationSchema.validate(studentData);
-
-    // data validation using zod
-
-    //   const zodParsedData = StudentValidationSchema.parse(studentData);
-
-    const result = await USerServices.createStudentIntoDB();
-
-    // .......got from joi.......
-    // if (error) {
-    //   res.status(500).json({
-    //     success: true,
-    //     message: 'Something went wrong',
-    //     error: error.details,
-    //   });
-    // }
+    const result = await USerServices.createStudentIntoDB(
+      password,
+      studentData,
+    );
 
     res.status(200).json({
       success: true,
@@ -30,10 +20,10 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: 'Something went wrong',
-      error: err,
-    });
+    next();
   }
+};
+
+export const UserControllers = {
+  createStudent,
 };

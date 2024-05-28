@@ -8,9 +8,6 @@ import {
   TUserName,
 } from './student/student.interface';
 
-import bcrypt from 'bcrypt';
-import config from '..';
-
 const userNameSchema = new Schema<TUserName>({
   firstName: {
     type: String,
@@ -113,11 +110,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     ref: 'User',
   },
 
-  password: {
-    type: String,
-    required: [true, 'password is required'],
-    maxlength: [20, 'password cannot be more than 20'],
-  },
   name: {
     type: userNameSchema,
     required: true,
@@ -172,17 +164,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     type: Boolean,
     default: false,
   },
-});
-
-studentSchema.pre<TStudent>('save', async function (next) {
-  const user = this;
-
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
-  next();
-});
-studentSchema.post<TStudent>('save', function (doc, next) {
-  doc.password = '';
-  next();
 });
 
 // pre save middleware/hook

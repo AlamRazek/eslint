@@ -1,6 +1,8 @@
 import config from '../..';
+import { Student } from '../student.modul';
 import { TStudent } from '../student/student.interface';
-import { NewUser } from './user.interface';
+import { TUser } from './user.interface';
+
 import { User } from './user.model';
 
 const createStudentIntoDB = async (password: string, studentData: TStudent) => {
