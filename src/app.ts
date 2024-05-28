@@ -9,7 +9,8 @@ import express, {
 import { StudentRoutes } from './app/config/modules/student/student.route';
 import { UsersRoutes } from './app/config/modules/user/user.route';
 import { unknown } from 'zod';
-import globalErrorHandler from './middlewares/globalErrorHandler';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import notFound from './app/middlewares/notFound';
 const app: Application = express();
 // const port = 3000;
 
@@ -26,5 +27,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use(globalErrorHandler);
+
+// not found route
+app.use(notFound);
 
 export default app;
