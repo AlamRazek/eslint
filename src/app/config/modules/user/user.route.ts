@@ -5,6 +5,7 @@ const router = express.Router();
 
 const military = (req: Request, res: Response, next: NextFunction) => {
   console.log('i am a military');
+  next();
 };
 
 router.post('/create-student', military, UserControllers.createStudent);
