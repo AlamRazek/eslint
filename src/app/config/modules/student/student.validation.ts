@@ -10,11 +10,11 @@ const UserNameValidationSchema = z.object({
     }),
   middleName: z
     .string()
-    .optional()
     .refine((value) => /^[A-Za-z]+$/g.test(value), {
       message:
         'Middle name must contain only alphabetic characters, spaces, or hyphens',
-    }),
+    })
+    .optional(),
   lastName: z
     .string()
     .min(1, { message: 'Last name is required' })
@@ -61,7 +61,7 @@ const LocalGuardianValidationSchema = z.object({
   address: z.string().min(1, { message: 'Local guardian address is required' }),
 });
 
-const StudentValidationSchema = z.object({
+const CreateStudentValidationSchema = z.object({
   body: z.object({
     password: z.string().max(20),
     student: z.object({
@@ -94,5 +94,5 @@ const StudentValidationSchema = z.object({
 });
 
 export const StudentValidations = {
-  StudentValidationSchema,
+  CreateStudentValidationSchema,
 };
