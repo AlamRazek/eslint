@@ -7,7 +7,7 @@ import {
   TMonth,
 } from './academicSemester.interface';
 
-const months: TMonth[] = [
+const Months: TMonth[] = [
   'January',
   'February',
   'March',
@@ -48,11 +48,13 @@ const academicSemesterSchema = new Schema<TAcademicSemseter>(
     },
     startMonth: {
       type: String,
-      enum: months,
+      required: true,
+      enum: Months,
     },
     endMonth: {
       type: String,
-      enum: months,
+      required: true,
+      enum: Months,
     },
   },
   {
