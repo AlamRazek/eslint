@@ -38,7 +38,7 @@ export type TStudent = {
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImage?: string;
-
+  admissionSemester: string;
   isDeleted: boolean;
 };
 

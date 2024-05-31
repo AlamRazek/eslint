@@ -159,7 +159,9 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   profileImage: {
     type: String,
   },
-
+  admissionSemester: {
+    type: String,
+  },
   isDeleted: {
     type: Boolean,
     default: false,
