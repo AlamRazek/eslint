@@ -160,7 +160,8 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     type: String,
   },
   admissionSemester: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicSemester',
   },
   isDeleted: {
     type: Boolean,

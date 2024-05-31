@@ -1,4 +1,5 @@
 import config from '../..';
+import { TAcademicSemseter } from '../academicSemester/academicSemester.interface';
 import { Student } from '../student.modul';
 import { TStudent } from '../student/student.interface';
 import { TUser } from './user.interface';
@@ -15,8 +16,11 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   // set student rule
   userData.role = 'student';
 
+  // year semester 4digit number
+  const generalStudentId = (payload: TAcademicSemseter) => {};
+
   // manual generate id
-  userData.id = '203010001';
+  userData.id = generateStudentId();
 
   // create a user model
   const newUser = await User.create(userData); // built in static method
