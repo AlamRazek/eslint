@@ -22,3 +22,7 @@ export type TAcademicSemseter = {
   startMonth: TMonth;
   endMonth: TMonth;
 };
+
+export type TAcademicSemesterNameCodeMapper = {
+  [key: string]: string;
+};
