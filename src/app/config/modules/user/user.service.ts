@@ -6,6 +6,7 @@ import { TStudent } from '../student/student.interface';
 import { TUser } from './user.interface';
 
 import { User } from './user.model';
+import { generateStudentId } from './user.utils';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   // create a user
@@ -16,9 +17,6 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
   // set student rule
   userData.role = 'student';
-
-  // year semester 4digit number
-  const generateStudentId = (payload: TAcademicSemseter) => {};
 
   // find academic semester info
   const admissionSemester = await AcademicSemester.findById(
