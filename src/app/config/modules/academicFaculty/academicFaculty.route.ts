@@ -1,26 +1,29 @@
 import express from 'express';
+import validateRequest from '../../../middlewares/validateRequest';
+import { AcademicFacultyValidation } from './academicFaculty.validation';
+import { AcademicFacultyControllers } from './academicFaculty.controller';
 
 const router = express.Router();
 
 router.post(
-  '/create-academic-semester',
+  '/create-academic-faculty',
   validateRequest(
-    AcademicSemesterValidations.createAcademicSemesterValidationSchema,
+    AcademicFacultyValidation.createAcademicFacultyValidationSchema,
   ),
-  AcademicSemesterControllers.createAcademicSemester,
+  AcademicFacultyControllers.createAcademicFaculty,
 );
 
-router.get('/:semesterId', AcademicSemesterControllers.getAllAcademicSemester);
+router.get('/:semesterId', AcademicFacultyControllers.getSingleAcademicFaculty);
 
 router.patch(
-  '/:semesterId',
+  '/:facultyId',
   validateRequest(
-    AcademicSemesterValidations.updateAcademicSemesterValidationSchema,
+    AcademicFacultyValidation.updateAcademicFacultyValidationSchema,
   ),
-  AcademicSemesterControllers.updateAcademicSemester,
+  AcademicFacultyControllers.updateAcademicFaculty,
 );
 
-router.get('/', AcademicSemesterControllers.getAllAcademicSemester);
+router.get('/', AcademicFacultyControllers.getAllAcademicFaculties);
 
 // router.get('/', StudentControllers.getAllStudents);
 
@@ -28,4 +31,4 @@ router.get('/', AcademicSemesterControllers.getAllAcademicSemester);
 
 // router.delete('/:studentId', StudentControllers.deleteSingleStudent);
 
-export const AcademicSemesterRoutes = router;
+export const AcademicFacultyRoutes = router;
