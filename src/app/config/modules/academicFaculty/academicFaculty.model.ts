@@ -1,35 +1,13 @@
 import { Schema, model } from 'mongoose';
-import bcrypt from 'bcrypt';
-import { TUser } from './user.interface';
-import config from '../..';
 
-const academicFacultySchema = new Schema<TUser>(
+import { TAcademicFaculty } from './academicFaculty.interface';
+
+const academicFacultySchema = new Schema<TAcademicFaculty>(
   {
-    id: {
+    name: {
       type: String,
       require: true,
       unique: true,
-    },
-    password: {
-      type: String,
-      require: true,
-    },
-    needsPasswordChange: {
-      type: Boolean,
-      default: true,
-    },
-    role: {
-      type: String,
-      enum: ['student', 'faculty', 'admin'],
-    },
-    status: {
-      type: String,
-      enum: ['in-progress', 'blocked'],
-      default: 'in-progress',
-    },
-    isDeleted: {
-      type: Boolean,
-      default: false,
     },
   },
   {
@@ -37,4 +15,4 @@ const academicFacultySchema = new Schema<TUser>(
   },
 );
 
-export const User = model<TUser>('User', academicFacultySchema);
+export const User = model<TAcademicFaculty>('User', academicFacultySchema);
