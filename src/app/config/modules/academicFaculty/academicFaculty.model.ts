@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { TUser } from './user.interface';
 import config from '../..';
 
-const userSchema = new Schema<TUser>(
+const academicFacultySchema = new Schema<TUser>(
   {
     id: {
       type: String,
@@ -37,15 +37,4 @@ const userSchema = new Schema<TUser>(
   },
 );
 
-userSchema.pre<TUser>('save', async function (next) {
-  const user = this;
-
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
-  next();
-});
-userSchema.post<TUser>('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
-
-export const User = model<TUser>('User', userSchema);
+export const User = model<TUser>('User', academicFacultySchema);
