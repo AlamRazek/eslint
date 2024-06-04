@@ -9,47 +9,56 @@ const createAcademicDepartment = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Faculty created successfully',
+    message: 'Academic Department created successfully',
     data: result,
   });
 });
 
-const getAllAcademicFaculties = catchAsync(async (req, res) => {
-  const result = await AcademicFacultyServices.getAllAcademicFacultyFromDB();
+const getAllAcademicDepartment = catchAsync(async (req, res) => {
+  const result =
+    await AcademicDepartmentServices.getAllAcademicDepartmentFromDB();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic faculties are retrieved successfully',
+    message: 'Academic Department are retrieved successfully',
     data: result,
   });
 });
 
-const getSingleAcademicFaculty = catchAsync(async (req, res) => {
+const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   const { FacultyId } = req.params;
   const result =
-    await AcademicFacultyServices.getSingleAcademicFacultyFromDB(FacultyId);
+    await AcademicDepartmentServices.getSingleAcademicDepartmentFromDB(
+      FacultyId,
+    );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic faculty is retrieved successfully',
+    message: 'Academic Department is retrieved successfully',
     data: result,
   });
 });
 
-const updateAcademicFaculty = catchAsync(async (req, res) => {
+const updateAcademicDepartment = catchAsync(async (req, res) => {
   const { facultyId } = req.params;
-  const result = await AcademicFacultyServices.updateAcademicFacultyIntoDB(
-    facultyId,
-    req.body,
-  );
+  const result =
+    await AcademicDepartmentServices.updateAcademicDepartmentIntoDB(
+      facultyId,
+      req.body,
+    );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic faculty is updated successfully',
+    message: 'Academic Department is updated successfully',
     data: result,
   });
 });
 
-export const AcademicFacultyControllers = {};
+export const AcademicFacultyControllers = {
+  createAcademicDepartment,
+  getAllAcademicDepartment,
+  getSingleAcademicDepartment,
+  updateAcademicDepartment,
+};
