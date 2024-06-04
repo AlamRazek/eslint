@@ -6,7 +6,7 @@ import {
   TStudent,
   StudentModel,
   TUserName,
-} from './student/student.interface';
+} from './student.interface';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -166,6 +166,10 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   isDeleted: {
     type: Boolean,
     default: false,
+  },
+  academicDepartment: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicDepartment',
   },
 });
 
