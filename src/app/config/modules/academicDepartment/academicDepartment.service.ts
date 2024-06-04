@@ -1,6 +1,7 @@
+import { TAcademicDepartment } from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
 
-const createAcademicDepartmentIntiDb = async (payload: TAcademicFaculty) => {
+const createAcademicDepartmentIntiDb = async (payload: TAcademicDepartment) => {
   const result = await AcademicDepartment.create(payload);
   return result;
 };
@@ -17,7 +18,7 @@ const getSingleAcademicDepartmentFromDB = async (id: string) => {
 
 const updateAcademicDepartmentIntoDB = async (
   id: string,
-  payload: Partial<TAcademicSemseter>,
+  payload: Partial<TAcademicDepartment>,
 ) => {
   const result = await AcademicDepartment.findOneAndUpdate(
     { _id: id },
@@ -29,9 +30,9 @@ const updateAcademicDepartmentIntoDB = async (
   return result;
 };
 
-export const AcademicFacultyServices = {
-  createAcademicFacultyIntiDb,
-  getAllAcademicFacultyFromDB,
-  getSingleAcademicFacultyFromDB,
-  updateAcademicFacultyIntoDB,
+export const AcademicDepartmentServices = {
+  createAcademicDepartmentIntiDb,
+  getAllAcademicDepartmentFromDB,
+  getSingleAcademicDepartmentFromDB,
+  updateAcademicDepartmentIntoDB,
 };
