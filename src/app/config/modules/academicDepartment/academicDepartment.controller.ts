@@ -1,11 +1,11 @@
 import sendResponse from '../../../utils/sendResponse';
 import httpStatus from 'http-status';
 import catchAsync from '../../../utils/catchAsync';
+import { AcademicDepartmentServices } from './academicDepartment.service';
 
-const createAcademicFaculty = catchAsync(async (req, res) => {
-  const result = await AcademicFacultyServices.createAcademicFacultyIntiDb(
-    req.body,
-  );
+const createAcademicDepartment = catchAsync(async (req, res) => {
+  const result =
+    await AcademicDepartmentServices.createAcademicDepartmentIntiDb(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
