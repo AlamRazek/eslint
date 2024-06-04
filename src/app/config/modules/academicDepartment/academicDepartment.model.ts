@@ -28,6 +28,19 @@ academicDepartmentSchema.pre('save', async function (next) {
   next();
 });
 
+class AppError extends Error {
+  public statusCode: number;
+
+  constructor(statusCode: number, message: string, stack = '') {
+    super(message);
+    this.statusCode = statusCode;
+
+    if (stack) {
+      this.stack = stack;
+    }
+  }
+}
+
 academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
 
