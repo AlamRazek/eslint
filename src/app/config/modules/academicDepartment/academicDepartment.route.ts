@@ -14,12 +14,12 @@ router.post(
 );
 
 router.get(
-  '/:FacultyId',
+  '/:departmentId',
   AcademicDepartmentControllers.getSingleAcademicDepartment,
 );
 
 router.patch(
-  '/:facultyId',
+  '/:departmentId',
   validateRequest(
     AcademicDepartmentValidation.updateAcademicDepartmentValidationSchema,
   ),
@@ -27,11 +27,5 @@ router.patch(
 );
 
 router.get('/', AcademicDepartmentControllers.getAllAcademicDepartment);
-
-// router.get('/', StudentControllers.getAllStudents);
-
-// router.get('/:studentId', StudentControllers.getOneStudent);
-
-// router.delete('/:studentId', StudentControllers.deleteSingleStudent);
 
 export const AcademicDepartmentRoutes = router;
