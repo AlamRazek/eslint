@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const UserNameValidationSchema = z.object({
+const CreateUserNameValidationSchema = z.object({
   firstName: z
     .string()
     .min(1, { message: 'First name is required' })
@@ -23,7 +23,7 @@ const UserNameValidationSchema = z.object({
     }),
 });
 
-const GuardianValidationSchema = z.object({
+const CreateGuardianValidationSchema = z.object({
   father: z
     .string()
     .min(1, { message: 'Father name is required' })
@@ -50,7 +50,7 @@ const GuardianValidationSchema = z.object({
     .min(1, { message: 'Mother contact number is required' }),
 });
 
-const LocalGuardianValidationSchema = z.object({
+const CreateLocalGuardianValidationSchema = z.object({
   name: z.string().min(1, { message: 'Local guardian name is required' }),
   occupation: z
     .string()
@@ -65,7 +65,7 @@ const CreateStudentValidationSchema = z.object({
   body: z.object({
     password: z.string().max(20),
     student: z.object({
-      name: UserNameValidationSchema,
+      name: CreateUserNameValidationSchema,
       gender: z.enum(['male', 'female']),
       dateOfBirth: z.string().optional(),
       email: z
@@ -86,8 +86,8 @@ const CreateStudentValidationSchema = z.object({
       permanentAddress: z
         .string()
         .min(1, { message: 'Permanent address is required' }),
-      guardian: GuardianValidationSchema,
-      localGuardian: LocalGuardianValidationSchema,
+      guardian: CreateGuardianValidationSchema,
+      localGuardian: CreateLocalGuardianValidationSchema,
       admissionSemester: z.string(),
       profileImage: z.string().optional(),
       academicDepartment: z.string(),
@@ -142,4 +142,5 @@ export const updateStudentValidationSchema = z.object({
 
 export const StudentValidations = {
   CreateStudentValidationSchema,
+  updateStudentValidationSchema,
 };
