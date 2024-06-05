@@ -27,6 +27,17 @@ const getSingleStudentFromDb = async (id: string) => {
     });
   return result;
 };
+const updateStudentIntoDb = async (id: string) => {
+  const result = await Student.findOne({ id })
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
+  return result;
+};
 const deleteSingleStudentFromDb = async (id: string) => {
   const session = await mongoose.startSession();
 
@@ -67,4 +78,5 @@ export const StudentServices = {
   getAllStudentsFromDB,
   getSingleStudentFromDb,
   deleteSingleStudentFromDb,
+  updateStudentIntoDb,
 };
