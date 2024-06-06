@@ -27,15 +27,9 @@ const getSingleStudentFromDb = async (id: string) => {
     });
   return result;
 };
-const updateStudentIntoDb = async (id: string) => {
-  const result = await Student.findOne({ id })
-    .populate('admissionSemester')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicFaculty',
-      },
-    });
+const updateStudentIntoDb = async (id: string, payload: Partial<Student>) => {
+  const result = await Student.findOne({ id });
+
   return result;
 };
 const deleteSingleStudentFromDb = async (id: string) => {
