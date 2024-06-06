@@ -3,6 +3,7 @@ import { Student } from './student.modul';
 import AppError from '../../../errors/AppError';
 import { User } from '../user/user.model';
 import httpStatus from 'http-status';
+import { TStudent } from './student.interface';
 
 const getAllStudentsFromDB = async () => {
   const result = await Student.find()
@@ -27,8 +28,8 @@ const getSingleStudentFromDb = async (id: string) => {
     });
   return result;
 };
-const updateStudentIntoDb = async (id: string, payload: Partial<Student>) => {
-  const result = await Student.findOne({ id });
+const updateStudentIntoDb = async (id: string, payload: Partial<TStudent>) => {
+  const result = await Student.findOne({ id }, payload);
 
   return result;
 };
