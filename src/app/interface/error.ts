@@ -1,4 +1,4 @@
-type TErrorSource = {
+export type TErrorSource = {
   path: string | number;
   message: string;
 }[];
