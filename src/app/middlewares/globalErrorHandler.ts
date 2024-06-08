@@ -20,6 +20,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     const errorSources = err.issues.map((issue: ZodIssue) => {
       return {
         path: issue?.path[issue.path.length - 1],
+        message: issue.message,
       };
     });
 
