@@ -1,5 +1,5 @@
 import { ErrorRequestHandler } from 'express';
-import { ZodError } from 'zod';
+import { ZodError, ZodIssue } from 'zod';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = err.statusCode || 500;
@@ -16,8 +16,25 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     },
   ];
 
+  const handleZodError = (err: ZodError) => {
+    const errorSources = err.issues.map((issue: ZodIssue) => {
+      return {
+        path: issue?.path[issue.path.length - 1],
+      };
+    });
+
+    const statusCode = 400;
+
+    return {
+      statusCode,
+      message: 'Zod Validation Error',
+      errorSources,
+    };
+  };
+
   if (err instanceof ZodError) {
-    statusCode = 400;
+    const simplifiedError = handleZodError(err);
+
     message = 'I am zod Error';
   }
 
