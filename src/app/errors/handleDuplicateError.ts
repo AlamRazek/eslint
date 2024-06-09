@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { TErrorSources, TGenericErrorResponse } from '../interface/error';
 
-const handleCastError = (err: any): TGenericErrorResponse => {
+const handleDuplicateError = (err: any): TGenericErrorResponse => {
   const match = err.message.match(/"([^"]*"/);
 
   const extractMessage = match && match[1];
@@ -9,7 +9,7 @@ const handleCastError = (err: any): TGenericErrorResponse => {
   const errorSources: TErrorSources = [
     {
       path: '',
-      message: extractMessage,
+      message: `${extractMessage} is already exists`,
     },
   ];
 
@@ -22,4 +22,4 @@ const handleCastError = (err: any): TGenericErrorResponse => {
   };
 };
 
-export default handleCastError;
+export default handleDuplicateError;
