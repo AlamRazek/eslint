@@ -27,7 +27,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     errorSources = simplifiedError?.errorSources;
   } else if (err?.name === 'validationError') {
     const simplifiedError = handleValidationError(err);
-    statusCode = simplifiedError?.message;
+    statusCode = simplifiedError?.statusCode;
     errorSources = simplifiedError?.errorSources;
   } else if (err?.name === 'CastError') {
     const simplifiedError = handleCastError(err);
