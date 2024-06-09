@@ -26,3 +26,7 @@ process.on('unhandledRejection', () => {
     });
   }
 });
+
+process.on('uncaughtException', () => {
+  process.exit(1);
+});
