@@ -8,12 +8,7 @@ import { TStudent } from './student.interface';
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const queryObj = { ...query };
 
-  const studentSearchAbleFields = [
-    'email',
-    'name.firstName',
-    'presentAddress',
-    'limit',
-  ];
+  const studentSearchAbleFields = ['email', 'name.firstName', 'presentAddress'];
   let searchTerm = '';
 
   if (query?.searchTerm) {
@@ -27,7 +22,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   });
 
   // filtering
-  const excludeFields = ['searchTerms'];
+  const excludeFields = ['searchTerms', 'sort', 'limit', 'page'];
 
   excludeFields.forEach((el) => delete queryObj[el]);
 
@@ -64,7 +59,15 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 
   const limitQuery = paginateQuery.limit(limit);
 
-  return limitQuery;
+  // field limiting
+  let fields = '-__v';
+  if (query.fields) {
+    fields = (query.fields as string).split(',').join(' ');
+  }
+
+  const fieldQuery = await limitQuery.select(fields);
+
+  return fieldQuery;
 };
 
 const getSingleStudentFromDb = async (id: string) => {
