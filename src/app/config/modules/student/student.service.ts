@@ -8,7 +8,12 @@ import { TStudent } from './student.interface';
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const queryObj = { ...query };
 
-  const studentSearchAbleFields = ['email', 'name.firstName', 'presentAddress'];
+  const studentSearchAbleFields = [
+    'email',
+    'name.firstName',
+    'presentAddress',
+    'limit',
+  ];
   let searchTerm = '';
 
   if (query?.searchTerm) {
@@ -40,8 +45,15 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   if (query.sort) {
     sort = query.sort as string;
   }
+  const sortQuery = filterQuery.sort(sort);
 
-  return result;
+  let limit = 1;
+  if (query.limit) {
+    limit = query.limit as number;
+  }
+  const limitQuery = sortQuery.limit(limit);
+
+  return limitQuery;
 };
 
 const getSingleStudentFromDb = async (id: string) => {
