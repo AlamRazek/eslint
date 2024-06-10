@@ -36,4 +36,8 @@ class QueryBuilder<T> {
 
     return this;
   }
+  sort() {
+    const sort = this?.query?.sort || '-createdAt';
+    this.modelQuery = this.modelQuery.sort(sort as string);
+  }
 }
