@@ -1,7 +1,11 @@
+import httpStatus from 'http-status';
 import QueryBuilder from '../../../builder/QueryBuilder';
+import AppError from '../../../errors/AppError';
 import { FacultySearchableFields } from './faculty.constant';
 import { TFaculty } from './faculty.interface';
 import { Faculty } from './faculty.model';
+import { User } from '../user/user.model';
+import mongoose from 'mongoose';
 
 const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
   const facultyQuery = new QueryBuilder(
@@ -82,4 +86,11 @@ const deleteFacultyFromDB = async (id: string) => {
     await session.endSession();
     throw new Error(err);
   }
+};
+
+export const FacultyServices = {
+  getAllFacultiesFromDB,
+  getSingleFacultyFromDB,
+  updateFacultyIntoDB,
+  deleteFacultyFromDB,
 };
