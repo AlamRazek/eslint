@@ -82,3 +82,10 @@ const deleteAdminFromDB = async (id: string) => {
     throw new Error(err);
   }
 };
+
+export const AdminServices = {
+  getAllAdminsFromDB,
+  getSingleAdminFromDB,
+  updateAdminIntoDB,
+  deleteAdminFromDB,
+};
