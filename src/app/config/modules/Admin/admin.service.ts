@@ -2,6 +2,10 @@ import { Admin } from './admin.model';
 import QueryBuilder from '../../../builder/QueryBuilder';
 import { AdminSearchableFields } from './admin.constant';
 import { TAdmin } from './admin.interface';
+import mongoose from 'mongoose';
+import AppError from '../../../errors/AppError';
+import httpStatus from 'http-status';
+import { User } from '../user/user.model';
 
 const getAllADminsFromDB = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
@@ -38,4 +42,43 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
     runValidators: true,
   });
   return result;
+};
+
+const deleteAdminFromDB = async (id: string) => {
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const deletedAdmin = await Admin.findByIdAndUpdate(
+      id,
+      { isDeleted: true },
+      { new: true, session },
+    );
+
+    if (!deletedAdmin) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete student');
+    }
+    // get user id from deleted admin
+    const userId = deletedAdmin.user;
+
+    const deletedUser = await User.findOneAndUpdate(
+      userId,
+      { isDeleted: true },
+      { new: true, session },
+    );
+
+    if (!deletedUser) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user');
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    return deletedAdmin;
+  } catch (err: any) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw new Error(err);
+  }
 };
