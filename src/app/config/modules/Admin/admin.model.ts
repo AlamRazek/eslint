@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { AdminModel, TAdmin, TUserName } from './admin.interface';
 import { BloodGroup, Gender } from '../Faculty/faculty.constant';
 
@@ -115,3 +115,11 @@ adminSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
+
+//checking if user is already exist!
+adminSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Admin.findOne({ id });
+  return existingUser;
+};
+
+export const Admin = model<TAdmin, AdminModel>('Admin', adminSchema);
