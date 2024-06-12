@@ -99,3 +99,9 @@ adminSchema.virtual('fullName').get(function () {
     this?.name?.lastName
   );
 });
+
+// filter out deleted documents
+adminSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
