@@ -49,3 +49,8 @@ export const updateAdminValidationSchema = z.object({
     }),
   }),
 });
+
+export const AdminValidations = {
+  createAdminValidationSchema,
+  updateAdminValidationSchema,
+};
