@@ -3,7 +3,7 @@ import catchAsync from '../../../utils/catchAsync';
 import sendResponse from '../../../utils/sendResponse';
 import { AdminServices } from './admin.service';
 
-const getAllAdmin = catchAsync(async (req, res) => {
+const getAllAdmins = catchAsync(async (req, res) => {
   const result = await AdminServices.getAllAdminsFromDB(req.query);
 
   sendResponse(res, {
@@ -50,3 +50,10 @@ const deleteAdmin = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+export const AdminControllers = {
+  getAllAdmins,
+  getSingleAdmin,
+  deleteAdmin,
+  updateAdmin,
+};
