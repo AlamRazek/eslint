@@ -5,6 +5,7 @@ import { AdminServices } from './admin.service';
 
 const getAllAdmin = catchAsync(async (req, res) => {
   const result = await AdminServices.getAllAdminsFromDB(req.query);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -14,5 +15,13 @@ const getAllAdmin = catchAsync(async (req, res) => {
 });
 
 const getSingleAdmin = catchAsync(async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
+  const result = await AdminServices.getSingleAdminFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin is retrieved successfully',
+    data: result,
+  });
 });
