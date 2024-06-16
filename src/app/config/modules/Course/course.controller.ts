@@ -1,4 +1,6 @@
+import httpStatus from 'http-status';
 import catchAsync from '../../../utils/catchAsync';
+import sendResponse from '../../../utils/sendResponse';
 import { CourseServices } from './course.service';
 
 const createCourse = catchAsync(async (req, res) => {
@@ -6,7 +8,7 @@ const createCourse = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Faculty created successfully',
+    message: 'Course created successfully',
     data: result,
   });
 });
@@ -50,7 +52,7 @@ const updateAcademicFaculty = catchAsync(async (req, res) => {
 });
 
 export const AcademicFacultyControllers = {
-  createAcademicFaculty,
+  createCourse,
   getAllAcademicFaculties,
   getSingleAcademicFaculty,
   updateAcademicFaculty,
