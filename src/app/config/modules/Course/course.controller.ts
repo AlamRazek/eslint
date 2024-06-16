@@ -24,15 +24,14 @@ const getAllCourses = catchAsync(async (req, res) => {
   });
 });
 
-const getSingleAcademicFaculty = catchAsync(async (req, res) => {
-  const { FacultyId } = req.params;
-  const result =
-    await AcademicFacultyServices.getSingleAcademicFacultyFromDB(FacultyId);
+const getSingleCourse = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await CourseServices.getAllSingleCoursesFromDb(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic faculty is retrieved successfully',
+    message: 'Single Course is retrieved successfully',
     data: result,
   });
 });
@@ -54,6 +53,6 @@ const updateAcademicFaculty = catchAsync(async (req, res) => {
 export const AcademicFacultyControllers = {
   createCourse,
   getAllCourses,
-  getSingleAcademicFaculty,
+  getSingleCourse,
   updateAcademicFaculty,
 };
