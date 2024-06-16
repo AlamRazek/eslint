@@ -25,4 +25,4 @@ router.delete('/:id', CourseControllers.deleteCourse);
 
 router.get('/', CourseControllers.getAllCourses);
 
-export const AcademicFacultyRoutes = router;
+export const CourseRoutes = router;
