@@ -13,13 +13,13 @@ const createCourse = catchAsync(async (req, res) => {
   });
 });
 
-const getAllAcademicFaculties = catchAsync(async (req, res) => {
-  const result = await AcademicFacultyServices.getAllAcademicFacultyFromDB();
+const getAllCourses = catchAsync(async (req, res) => {
+  const result = await CourseServices.getAllCoursesFromDb();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic faculties are retrieved successfully',
+    message: 'Courses are retrieved successfully',
     data: result,
   });
 });
@@ -53,7 +53,7 @@ const updateAcademicFaculty = catchAsync(async (req, res) => {
 
 export const AcademicFacultyControllers = {
   createCourse,
-  getAllAcademicFaculties,
+  getAllCourses,
   getSingleAcademicFaculty,
   updateAcademicFaculty,
 };
