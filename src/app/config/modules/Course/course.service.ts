@@ -67,9 +67,19 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
       .filter((el) => el.course && el.isDeleted)
       .map((el) => el.course);
 
-    const deletedPreRequisiteCourses = await Course.findByIdAndUpdate(id, {
-      $pull: { preRequisiteCourses: { course: { $in: deletedPreRequisite } } },
-    });
+    const deletedPreRequisiteCourses = await Course.findByIdAndUpdate(
+      id,
+      {
+        $pull: {
+          preRequisiteCourses: { course: { $in: deletedPreRequisite } },
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+        session,
+      },
+    );
 
     // filter out the new course field
     const newPreRequisites = preRequisiteCourses?.filter(
