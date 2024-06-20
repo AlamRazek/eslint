@@ -1,7 +1,10 @@
+import httpStatus from 'http-status';
 import QueryBuilder from '../../../builder/QueryBuilder';
+import AppError from '../../../errors/AppError';
 import { CourseSearchableFields } from './course.constant';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
+import mongoose from 'mongoose';
 
 const createCourseIntoDB = async (payload: TCourse) => {
   const result = await Course.create(payload);
@@ -36,8 +39,14 @@ const deleteCourseFromDB = async (id: string) => {
   return result;
 };
 
+//------ update course ------
+
 const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
   const { preRequisiteCourses, ...courseRemainingData } = payload;
+
+  const session = await mongoose.startSession();
+
+  session.startTransaction();
 
   // basic course info update
 
@@ -47,6 +56,7 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
     {
       new: true,
       runValidators: true,
+      session,
     },
   );
 
@@ -60,7 +70,7 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
     const deletedPreRequisiteCourses = await Course.findByIdAndUpdate(id, {
       $pull: { preRequisiteCourses: { course: { $in: deletedPreRequisite } } },
     });
-    console.log('1st ', preRequisiteCourses);
+
     // filter out the new course field
     const newPreRequisites = preRequisiteCourses?.filter(
       (el) => el.course && !el.isDeleted,
@@ -69,12 +79,16 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
     const newPreRequisitesCourses = await Course.findByIdAndUpdate(id, {
       $addToSet: { preRequisiteCourses: { $each: newPreRequisites } },
     });
-    console.log({ newPreRequisites });
+    console.log('1st', { newPreRequisites });
+    console.log('2nd', newPreRequisitesCourses);
+    console.log('3rd', preRequisiteCourses);
   }
 
   const result = await Course.findById(id).populate(
     'preRequisiteCourses.course',
   );
+
+  console.log(result);
 
   return result;
 };
