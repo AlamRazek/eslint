@@ -136,8 +136,10 @@ const assignFacultiesWithCourseIntoDB = async (
     },
     {
       upsert: true,
+      new: true,
     },
   );
+  return result;
 };
 
 export const CourseServices = {
