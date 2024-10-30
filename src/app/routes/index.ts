@@ -1,34 +1,23 @@
 import { Router } from 'express';
-import { UsersRoutes } from '../config/modules/user/user.route';
-import { StudentRoutes } from '../config/modules/student/student.route';
-import { AcademicSemesterRoutes } from '../config/modules/academicSemester/academicSemester.route';
-import { AcademicFacultyRoutes } from '../config/modules/academicFaculty/academicFaculty.route';
-import { AcademicDepartmentRoutes } from '../config/modules/academicDepartment/academicDepartment.route';
-import { AdminRoutes } from '../config/modules/Admin/admin.route';
-import { FacultyRoutes } from '../config/modules/Faculty/faculty.route';
-import { CourseRoutes } from '../config/modules/Course/course.route';
+import { StudentRoutes } from '../modules/student/student.route';
+import { UserRoutes } from '../modules/user/user.route';
+import { AcademicSemesterRoutes } from '../modules/academicSemester.ts/academicSemester.route';
+import { AcademicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.route';
+import { AcademicDepartmentRoutes } from '../modules/academicDepartment/academicDepartment.routes';
 
 const router = Router();
 
 const moduleRoutes = [
   {
     path: '/users',
-    route: UsersRoutes,
-  },
-  {
-    path: '/admins',
-    route: AdminRoutes,
-  },
-  {
-    path: '/faculties',
-    route: FacultyRoutes,
+    route: UserRoutes,
   },
   {
     path: '/students',
     route: StudentRoutes,
   },
   {
-    path: '/academic-semesters',
+    path: '/academic-semester',
     route: AcademicSemesterRoutes,
   },
   {
@@ -36,12 +25,8 @@ const moduleRoutes = [
     route: AcademicFacultyRoutes,
   },
   {
-    path: '/academic-department',
+    path: '/academic-departments',
     route: AcademicDepartmentRoutes,
-  },
-  {
-    path: '/courses',
-    route: CourseRoutes,
   },
 ];
 
