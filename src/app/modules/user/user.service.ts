@@ -26,6 +26,10 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
   const session = await mongoose.startSession();
 
+  if (!admissionSemester) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Academic semester not found');
+  }
+
   try {
     session.startTransaction();
 

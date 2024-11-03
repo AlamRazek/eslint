@@ -3,7 +3,7 @@ import { Student } from './student.modul';
 import { User } from '../user/user.model';
 import httpStatus from 'http-status';
 import { TStudent } from './student.interface';
-import QueryBuilder from '../../../builder/QueryBuilder';
+import QueryBuilder from '../../builder/QueryBuilder';
 import { studentSearchableField } from './student.constant';
 import AppError from '../../errors/AppError';
 

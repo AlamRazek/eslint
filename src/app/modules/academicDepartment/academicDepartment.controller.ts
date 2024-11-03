@@ -16,10 +16,10 @@ const createAcademicDepartment = catchAsync(async (req, res) => {
 });
 
 const getSingleAcademicDepartment = catchAsync(async (req, res) => {
-  const { facultyId } = req.params;
+  const { departmentID } = req.params;
   const result =
     await AcademicDepartmentServices.getSingleAcademicDepartmentFromDB(
-      facultyId,
+      departmentID,
     );
 
   sendResponse(res, {
