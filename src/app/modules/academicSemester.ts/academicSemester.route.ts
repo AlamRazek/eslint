@@ -13,6 +13,8 @@ router.post(
   AcademicSemesterControllers.createAcademicSemester,
 );
 
+router.get('/', AcademicSemesterControllers.getAllAcademicSemesters);
+
 router.get(
   '/:semesterId',
   AcademicSemesterControllers.getSingleAcademicSemester,
