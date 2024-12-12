@@ -65,7 +65,7 @@ const createStudentIntoDB = async (
     }
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id; //reference id
-    payload.profileImg = secure_url;
+    payload.profileImage = secure_url;
 
     const newStudent = await Student.create([payload], { session });
 
