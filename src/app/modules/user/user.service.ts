@@ -19,7 +19,12 @@ import { TFaculty } from '../Faculty/faculty.interface';
 import { TAdmin } from '../Admin/admin.interface';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
-const createStudentIntoDB = async (password: string, payload: TStudent) => {
+const createStudentIntoDB = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  file: any,
+  password: string,
+  payload: TStudent,
+) => {
   // create a user object
   const userData: Partial<TUser> = {};
 
@@ -34,11 +39,11 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     payload.admissionSemester,
   );
 
-  const session = await mongoose.startSession();
-
   if (!admissionSemester) {
     throw new AppError(httpStatus.NOT_FOUND, 'Academic semester not found');
   }
+
+  const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
@@ -46,7 +51,10 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     // set  generated id
     userData.id = await generatedStudentId(admissionSemester);
 
-    sendImageToCloudinary();
+    const imageName = `${userData.id}${payload?.name?.firstName}`;
+    const path = file?.path;
+    //send image to cloudinary
+    const { secure_url } = await sendImageToCloudinary(imageName, path);
 
     // create a user
     const newUser = await User.create([userData], { session });
@@ -57,6 +65,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     }
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id; //reference id
+    payload.profileImg = secure_url;
 
     const newStudent = await Student.create([payload], { session });
 
