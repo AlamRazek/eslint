@@ -9,7 +9,17 @@ cloudinary.config({
   api_secret: config.cloudinary_api_secret,
 });
 
-export const sendImageToCloudinary = (imageName: string, path: string) => {
+type CloudinaryResponse = {
+  secure_url: string;
+  public_id: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any; // Optional to handle any additional properties
+};
+
+export const sendImageToCloudinary = (
+  imageName: string,
+  path: string,
+): Promise<CloudinaryResponse> => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       path,
@@ -18,7 +28,7 @@ export const sendImageToCloudinary = (imageName: string, path: string) => {
         if (error) {
           reject(error);
         }
-        resolve(result);
+        resolve(result as CloudinaryResponse);
         // delete a file asynchronously
         fs.unlink(path, (err) => {
           if (err) {
