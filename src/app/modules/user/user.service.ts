@@ -34,6 +34,9 @@ const createStudentIntoDB = async (
   // set student role
   userData.role = 'student';
 
+  // set student email
+  userData.email = payload.email;
+
   // find academic semester info
   const admissionSemester = await AcademicSemester.findById(
     payload.admissionSemester,

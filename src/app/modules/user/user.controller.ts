@@ -7,7 +7,11 @@ const createStudent = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
   // const zodParseData = StudentValidationSchema.parse(studentData);
 
-  const result = await USerServices.createStudentIntoDB(password, studentData);
+  const result = await USerServices.createStudentIntoDB(
+    req.file,
+    password,
+    studentData,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
