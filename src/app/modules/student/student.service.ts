@@ -120,7 +120,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
       }),
     query,
   )
-    .search(studentSearchableFields)
+    .search(studentSearchableField)
     .filter()
     .sort()
     .paginate()
@@ -190,7 +190,7 @@ const updateStudentIntoDb = async (id: string, payload: Partial<TStudent>) => {
   return result;
 };
 
-const deleteStudentFromDB = async (id: string) => {
+const deleteSingleStudentFromDb = async (id: string) => {
   const session = await mongoose.startSession();
 
   try {
