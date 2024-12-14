@@ -147,7 +147,7 @@ const getSingleStudentFromDb = async (id: string) => {
   return result;
 };
 
-const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
+const updateStudentIntoDb = async (id: string, payload: Partial<TStudent>) => {
   const { name, guardian, localGuardian, ...remainingStudentData } = payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
