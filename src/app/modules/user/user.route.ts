@@ -26,14 +26,14 @@ router.post(
 
 router.post(
   '/create-faculty',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(createFacultyValidationSchema),
   USerController.createFaculty,
 );
 
 router.post(
   '/create-admin',
-  // auth(USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(createAdminValidationSchema),
   USerController.createAdmin,
 );
