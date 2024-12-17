@@ -54,21 +54,22 @@ const createStudentIntoDB = async (
     // set  generated id
     userData.id = await generatedStudentId(admissionSemester);
 
-    const imageName = `${userData.id}${payload?.name?.firstName}`;
-    const path = file?.path;
-    //send image to cloudinary
-    const { secure_url } = await sendImageToCloudinary(imageName, path);
+    if (file) {
+      const imageName = `${userData.id}${payload?.name?.firstName}`;
+      const path = file?.path;
+      //send image to cloudinary
+      const { secure_url } = await sendImageToCloudinary(imageName, path);
+      payload.profileImage = secure_url;
+    }
 
     // create a user
     const newUser = await User.create([userData], { session });
-
     // create a student
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id; //reference id
-    payload.profileImage = secure_url;
 
     const newStudent = await Student.create([payload], { session });
 
